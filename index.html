@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Equipamentos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="bg-dark text-white text-center py-4">
+        <h1 class="display-5">Verificador de Equipamentos</h1>
+        <p class="lead">Verificar a viabilidade gerada no protocolo para responder</p>
+    </header>
+
+    <main class="container my-5">
+        <section class="row g-4">
+            <p class="lead">Selecione as opções abaixo para encontrar o equipamento ideal</p>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <label for="modalidade" class="form-label fw-bold">1. Modalidade:</label>
+                    <select id="modalidade" class="form-select">
+                        <option value="">Selecione a Modalidade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <label for="viabilidade" class="form-label fw-bold">2. Viabilidade:</label>
+                    <select id="viabilidade" class="form-select" disabled>
+                        <option value="">Selecione a Viabilidade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <label for="plano" class="form-label fw-bold">3. Plano:</label>
+                    <select id="plano" class="form-select" disabled>
+                        <option value="">Selecione o Plano</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-5 text-center">
+            <div id="resultado-final" class="card bg-light p-4 shadow-sm">
+                <h3>Resultado:</h3>
+            </div>
+        </section>
+    </main>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
