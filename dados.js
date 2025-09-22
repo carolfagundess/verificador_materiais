@@ -54,10 +54,10 @@ export const dados = {
           nome: "Caixa de atendimento (GPON)",
           planos: {
             "100-800mega": {
-              equipamento: "F601 + RB750G3",
+              equipamento: "F601 + RB750G3 + AP(s) OMADA TPLINK",
             },
             "1000mega": {
-              equipamento: "F601 + RB4011",
+              equipamento: "F601 + RB4011 + AP(s) OMADA TPLINK",
             },
           },
         },
@@ -78,7 +78,7 @@ export const dados = {
               mesh: "Tplink HC 220 - WIFI 5",
             },
             "600mega+telefonia": {
-              equipamento: "Tplink XC220-G3 + ATA 2P",
+              equipamento: "Tplink XC220-G3 + ATA Khomp",
               mesh: "Tplink HC 220 - WIFI 5",
               obs: " Necessário para entregar linha fixa Unifique",
             },
@@ -90,7 +90,7 @@ export const dados = {
             "1000mega": {
               equipamento: "ZTE ONT F6600",
               mesh: "ZTE H3601",
-              obs: "quatro portas Gigabit Ethernet (GE LAN)",
+              obs: "Quatro portas Gigabit Ethernet (GE LAN)",
             },
             "2000-5000mega": {
               equipamento: "ZTE ONT F8648P",
@@ -108,10 +108,10 @@ export const dados = {
   },
   comentarios: {
     "PTP-DEDICADO-01":
-      "Dedicados PTP depende de projeto da engenharia, consulte o protocolo e veja o projeto gerado",
+      "Dedicados PTP dependem de projeto da engenharia, consulte o protocolo e veja o projeto gerado",
     "PTP-INTERLAN-01":
-      "Interconexões PTP depende de projeto da engenharia, consulte o protocolo e veja o projeto",
+      "Interconexões PTP dependem de projeto da engenharia, consulte o protocolo e veja o projeto",
     "PTP-BL-01":
-      "Banda Larga PTP depende de projeto da engenharia, consulte o protocolo e veja o projeto",
+      "Banda Larga PTP dependem de projeto da engenharia, consulte o protocolo e veja o projeto",
   },
 };

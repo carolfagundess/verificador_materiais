@@ -22,6 +22,19 @@ function resetarTudo(viabilidadeSelect, planoSelect, resultadoDiv) {
   resultadoDiv.innerHTML = "<h3>Resultado:</h3>";
 }
 
+function popularSelect(selectElement, dados, textoDefault, formatadorDeTexto) {
+  selectElement.innerHTML = `<option value="">${textoDefault}</option>`;
+  Object.keys(dados).forEach((chave) => {
+    const option = document.createElement("option");
+    option.value = chave;
+    // Usa a função de formatação se ela for fornecida, senão usa o nome padrão
+    option.textContent = formatadorDeTexto
+      ? formatadorDeTexto(chave)
+      : dados[chave].nome;
+    selectElement.appendChild(option);
+  });
+}
+
 //INICIAR APLICACÃO
 function iniciarAplicacao() {
   const modalidadeSelect = document.getElementById("modalidade");
@@ -29,17 +42,32 @@ function iniciarAplicacao() {
   const planoSelect = document.getElementById("plano");
   const resultadoDiv = document.getElementById("resultado-final");
 
-  function popularModalidades(modalidadeSelect) {
-    const modalidades = Object.keys(dados.modalidades);
-    modalidades.forEach((modalidade) => {
-      const option = document.createElement("option");
-      option.value = modalidade;
-      option.textContent = dados.modalidades[modalidade].nome;
-      modalidadeSelect.appendChild(option);
-    });
+  function exibirResultadoFinal(
+    modalidadeObj,
+    viabilidadeObj,
+    planoSelecionado,
+    planoObj
+  ) {
+    let resultadoHTML = `
+    <h3>Resultado:</h3>
+    <p><strong>Modalidade:</strong> ${modalidadeObj.nome}</p>
+    <p><strong>Viabilidade:</strong> ${viabilidadeObj.nome}</p>
+    <p><strong>Plano:</strong> ${formatarNomePlano(planoSelecionado)}</p>
+    <p><strong>Equipamento:</strong> ${planoObj.equipamento}</p>
+`;
+
+    if (planoObj.mesh) {
+      resultadoHTML += `<p><strong>Mesh: </strong>${planoObj.mesh}</p>`;
+    }
+
+    if (planoObj.obs) {
+      resultadoHTML += `<p><strong>Observação: </strong>${planoObj.obs}</p>`;
+    }
+
+    return resultadoHTML;
   }
 
-  popularModalidades(modalidadeSelect);
+  popularSelect(modalidadeSelect, dados.modalidades, "Selecione a Modalidade");
 
   // 1. Ouvinte para o menu de Modalidade
   modalidadeSelect.addEventListener("change", () => {
@@ -49,19 +77,16 @@ function iniciarAplicacao() {
     if (modalidadeSelecionada) {
       const viabilidadesDaModalidade =
         dados.modalidades[modalidadeSelecionada].viabilidades;
-      const chavesDasViabilidades = Object.keys(viabilidadesDaModalidade);
 
-      viabilidadeSelect.disabled = false;
-      viabilidadeSelect.innerHTML =
-        '<option value="">Selecione a Viabilidade</option>';
-
-      chavesDasViabilidades.forEach((chaveViabilidade) => {
-        const viabilidade = viabilidadesDaModalidade[chaveViabilidade];
-        const option = document.createElement("option");
-        option.value = chaveViabilidade;
-        option.textContent = viabilidade.nome;
-        viabilidadeSelect.appendChild(option);
-      });
+      if (viabilidadesDaModalidade) {
+        const chavesDasViabilidades = Object.keys(viabilidadesDaModalidade);
+        popularSelect(
+          viabilidadeSelect,
+          viabilidadesDaModalidade,
+          "Selecione a Viabilidade"
+        );
+        viabilidadeSelect.disabled = false;
+      }
     }
   });
 
@@ -69,17 +94,22 @@ function iniciarAplicacao() {
   viabilidadeSelect.addEventListener("change", () => {
     planoSelect.innerHTML = '<option value="">Selecione o Plano</option>';
     planoSelect.disabled = true;
-    resultadoDiv.innerHTML = "<h3>Resultado:</h3>";
+
+    if (!viabilidadeSelect.value) {
+      resultadoDiv.innerHTML = "<p>O equipamento será exibido aqui.</p>";
+      return;
+    }
 
     const modalidadeSelecionada = modalidadeSelect.value;
     const viabilidadeSelecionada = viabilidadeSelect.value;
 
-    if (viabilidadeSelecionada) {
-      const viabilidadeObj =
-        dados.modalidades[modalidadeSelecionada].viabilidades[
-          viabilidadeSelecionada
-        ];
+    // Use a primeira declaração de viabilidadeObj, que já é segura
+    const viabilidadeObj =
+      dados.modalidades?.[modalidadeSelecionada]?.viabilidades?.[
+        viabilidadeSelecionada
+      ];
 
+    if (viabilidadeObj) {
       if (viabilidadeObj.regraEspecial) {
         const textoComentario = getComentario(viabilidadeObj.regraEspecial);
         resultadoDiv.innerHTML = `<p class="fw-bold fs-5 text-danger">${textoComentario}</p>`;
@@ -88,22 +118,22 @@ function iniciarAplicacao() {
       }
 
       const planosDaViabilidade = viabilidadeObj.planos;
-      const chavesDosPlanos = Object.keys(planosDaViabilidade);
-
+      popularSelect(
+        planoSelect,
+        planosDaViabilidade,
+        "Selecione o Plano",
+        formatarNomePlano
+      );
       planoSelect.disabled = false;
-
-      chavesDosPlanos.forEach((chavePlano) => {
-        const option = document.createElement("option");
-        option.value = chavePlano;
-        option.textContent = formatarNomePlano(chavePlano);
-        planoSelect.appendChild(option);
-      });
     }
   });
 
   // 3. Ouvinte para o menu de Plano
   planoSelect.addEventListener("change", () => {
-    resultadoDiv.innerHTML = "<p>O equipamento será exibido aqui.</p>";
+    if (planoSelect.value === "") {
+      resultadoDiv.innerHTML = "<p>O equipamento será exibido aqui.</p>";
+      return;
+    }
 
     const modalidadeSelecionada = modalidadeSelect.value;
     const viabilidadeSelecionada = viabilidadeSelect.value;
@@ -116,26 +146,17 @@ function iniciarAplicacao() {
 
     if (planoObj) {
       const modalidadeObj = dados.modalidades[modalidadeSelecionada];
-      const viabilidadeObj = modalidadeObj.viabilidades[viabilidadeSelecionada];
+      const viabilidadeObj =
+        dados.modalidades[modalidadeSelecionada].viabilidades[
+          viabilidadeSelecionada
+        ];
 
-      let resultadoHTML = `
-            <h3>Resultado:</h3>
-            <p><strong>Modalidade:</strong> ${modalidadeObj.nome}</p>
-            <p><strong>Viabilidade:</strong> ${viabilidadeObj.nome}</p>
-            <p><strong>Plano:</strong> ${formatarNomePlano(
-              planoSelecionado
-            )}</p>
-            <p><strong>Equipamento:</strong> ${planoObj.equipamento}</p>
-        `;
-
-      if (planoObj.mesh) {
-        resultadoHTML += `<p><strong>Mesh:</strong>${planoObj.mesh}</p>`;
-      }
-
-      if (planoObj.obs) {
-        resultadoHTML += `<p><strong>Observação:</strong>${planoObj.obs}</p>`;
-      }
-
+      const resultadoHTML = exibirResultadoFinal(
+        modalidadeObj,
+        viabilidadeObj,
+        planoSelecionado,
+        planoObj
+      );
       resultadoDiv.innerHTML = resultadoHTML;
     }
   });
