@@ -1,9 +1,9 @@
-#  консультант по планам и оборудованию (Consultor de Planos e Equipamentos)
+#  Verificador de Equipamentos
 
 Uma aplicação web simples e dinâmica para consultar planos de internet, equipamentos associados e observações com base em filtros de modalidade e viabilidade técnica. Ideal para equipes de vendas ou técnicos de campo que precisam de acesso rápido a informações de portfólio.
 
-![Demonstração do Projeto](https://i.imgur.com/link-para-seu-gif-ou-imagem.gif)
-> **Nota:** Substitua o link acima por um screenshot ou um GIF animado da sua aplicação em funcionamento!
+<img width="1908" height="1020" alt="image" src="https://github.com/user-attachments/assets/0a18d166-3815-4405-82c3-34368dc9ec0b" />
+
 
 ---
 
