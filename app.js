@@ -53,7 +53,7 @@ function iniciarAplicacao() {
     <p><strong>Modalidade:</strong> ${modalidadeObj.nome}</p>
     <p><strong>Viabilidade:</strong> ${viabilidadeObj.nome}</p>
     <p><strong>Plano:</strong> ${formatarNomePlano(planoSelecionado)}</p>
-    <p><strong>Equipamento:</strong> ${planoObj.equipamento}</p>
+    <p><strong>Equipamento(s):</strong> ${planoObj.equipamento}</p>
 `;
 
     if (planoObj.mesh) {
@@ -75,17 +75,24 @@ function iniciarAplicacao() {
     const modalidadeSelecionada = modalidadeSelect.value;
 
     if (modalidadeSelecionada) {
+      // CORREÇÃO AQUI: Acessamos o objeto 'viabilidades' diretamente.
       const viabilidadesDaModalidade =
-        dados.modalidades[modalidadeSelecionada].viabilidades;
+        dados.modalidades[modalidadeSelecionada]?.viabilidades;
 
-      if (viabilidadesDaModalidade) {
-        const chavesDasViabilidades = Object.keys(viabilidadesDaModalidade);
+      // A verificação agora é se o objeto 'viabilidadesDaModalidade' existe e não está vazio.
+      if (
+        viabilidadesDaModalidade &&
+        Object.keys(viabilidadesDaModalidade).length > 0
+      ) {
         popularSelect(
           viabilidadeSelect,
           viabilidadesDaModalidade,
           "Selecione a Viabilidade"
         );
         viabilidadeSelect.disabled = false;
+      } else {
+        // Caso não haja viabilidades, garantimos que o select continue desabilitado.
+        viabilidadeSelect.disabled = true;
       }
     }
   });
@@ -103,7 +110,6 @@ function iniciarAplicacao() {
     const modalidadeSelecionada = modalidadeSelect.value;
     const viabilidadeSelecionada = viabilidadeSelect.value;
 
-    // Use a primeira declaração de viabilidadeObj, que já é segura
     const viabilidadeObj =
       dados.modalidades?.[modalidadeSelecionada]?.viabilidades?.[
         viabilidadeSelecionada

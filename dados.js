@@ -18,7 +18,7 @@ export const dados = {
           },
         },
         ptp: {
-          nome: "PTP",
+          nome: "Ponto-a-Ponto (PTP)",
           regraEspecial: "PTP-DEDICADO-01",
         },
       },
@@ -42,7 +42,7 @@ export const dados = {
           },
         },
         ptp: {
-          nome: "PTP",
+          nome: "Ponto-a-Ponto (PTP)",
           regraEspecial: "PTP-INTERLAN-01",
         },
       },
@@ -53,16 +53,22 @@ export const dados = {
         caixaDeAtendimentoGpon: {
           nome: "Caixa de atendimento (GPON)",
           planos: {
-            "100-800mega": {
+            "100-500mega": {
               equipamento: "F601 + RB750G3 + AP(s) OMADA TPLINK",
+              obs: "máximo de 3 Acess Points; Se requerir mais abrir tarefa com a TI",
+            },
+            "500mega-700mega": {
+              equipamento: "F601 + RB3011 + AP(s) OMADA TPLINK",
+              obs: "máximo de 3 Acess Points; Se requerir mais abrir tarefa com a TI",
             },
             "1000mega": {
               equipamento: "F601 + RB4011 + AP(s) OMADA TPLINK",
+              obs: "máximo de 3 Acess Points; Se requerir mais abrir tarefa com a TI",
             },
           },
         },
         ptp: {
-          nome: "PTP",
+          nome: "Ponto-a-Ponto (PTP)",
           regraEspecial: "PTP-BL-01",
         },
       },
@@ -73,21 +79,26 @@ export const dados = {
         caixaDeAtendimentoGpon: {
           nome: "Caixa de atendimento (GPON)",
           planos: {
-            "600mega": {
+            "100-600mega": {
               equipamento: "Tplink XC220-G3",
-              mesh: "Tplink HC 220 - WIFI 5",
+              mesh: "Tplink HC 220 - Wi-fi5",
             },
-            "600mega+telefonia": {
+            "100-600mega + adicional Wifi 6": {
+              equipamento: "ZTE ONT F6600",
+              mesh: "ZTE H3601",
+              obs: "Quatro portas Gigabit Ethernet (GE LAN)",
+            },
+            "600mega + telefonia": {
               equipamento: "Tplink XC220-G3 + ATA Khomp",
-              mesh: "Tplink HC 220 - WIFI 5",
-              obs: " Necessário para entregar linha fixa Unifique",
+              mesh: "Tplink HC 220 - Wi-fi5",
+              obs: " Para linha(s) fixa(s) Unifique",
             },
-            "600mega+2serviçosUnifique": {
+            "600mega + 2serviçosUnifique": {
               equipamento: "ZTE ONT F670L",
               mesh: "ZTE H119A",
               obs: "Necessário para uso de portas LAN",
             },
-            "1000mega": {
+            "660mega-1000mega": {
               equipamento: "ZTE ONT F6600",
               mesh: "ZTE H3601",
               obs: "Quatro portas Gigabit Ethernet (GE LAN)",
@@ -100,7 +111,7 @@ export const dados = {
           },
         },
         ptp: {
-          nome: "PTP",
+          nome: "Ponto-a-Ponto (PTP)",
           regraEspecial: "PTP-BL-01",
         },
       },
